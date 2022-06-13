@@ -3,5 +3,5 @@ export interface LoadingStateInterface {
 }
 
 export const initialLoadingState: LoadingStateInterface = {
-  loading: 0
+  loading: 0,
 };

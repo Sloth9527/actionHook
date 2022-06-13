@@ -23,12 +23,16 @@
   "license": "MIT",
   "private": false,
   "scripts": {
+    "prepare": "husky install",
+    "inithusky": "npx husky add .husky/pre-commit 'npx lint-staged'",
     "clean": "rimraf lib dist es coverage types",
     "lint": "eslint --ext js,ts src",
-    "prettier": "npx eslint-config-prettier index.js",
-    "prebuild": "pnpm clean",
+    "format": "npx prettier --write ./src",
+    "format:check": "npx prettier --check ./src",
     "build": "rollup -c",
-    "test": "jest"
+    "test": "jest",
+    "test:cov": "jest --coverage",
+    "precommit": "lint-staged"
   },
   "sideEffects": false,
   "devDependencies": {
@@ -53,8 +57,10 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-jest": "^26.5.3",
     "eslint-plugin-react": "^7.30.0",
+    "husky": "^8.0.1",
     "jest": "^28.1.1",
     "jest-environment-jsdom": "^28.1.1",
+    "lint-staged": "^13.0.1",
     "prettier": "^2.6.2",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
@@ -69,5 +75,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.18.3"
+  },
+  "lint-staged": {
+    "src/**/*.{ts,js}": "npx prettier --write"
   }
 }

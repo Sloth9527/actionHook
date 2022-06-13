@@ -1,6 +1,6 @@
-export function merge<T, S>(raw:T, expand:S) : T & S {
+export function merge<T = {}, S = {}>(raw: T, expand: S): T & S {
   return {
-    ...(raw || {}) as T,
-    ...(expand || {}) as S,
-  }
+    ...((raw || {}) as T),
+    ...((expand || {}) as S),
+  };
 }

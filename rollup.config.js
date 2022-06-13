@@ -1,165 +1,165 @@
-import { defineConfig } from 'rollup'
-import nodeResolve from '@rollup/plugin-node-resolve'
-import babel from '@rollup/plugin-babel'
-import replace from '@rollup/plugin-replace'
-import typescript from 'rollup-plugin-typescript2'
-import { terser } from 'rollup-plugin-terser'
+import { defineConfig } from "rollup";
+import nodeResolve from "@rollup/plugin-node-resolve";
+import babel from "@rollup/plugin-babel";
+import replace from "@rollup/plugin-replace";
+import typescript from "rollup-plugin-typescript2";
+import { terser } from "rollup-plugin-terser";
 
-import pkg from './package.json'
+import pkg from "./package.json";
 
-const extensions = ['.ts']
-const noDeclarationFiles = { compilerOptions: { declaration: false } }
+const extensions = [".ts"];
+const noDeclarationFiles = { compilerOptions: { declaration: false } };
 
-const babelRuntimeVersion = pkg.dependencies['@babel/runtime'].replace(
+const babelRuntimeVersion = pkg.dependencies["@babel/runtime"].replace(
   /^[^0-9]*/,
-  ''
-)
+  ""
+);
 
 const external = [
   ...Object.keys(pkg.dependencies || {}),
-  ...Object.keys(pkg.peerDependencies || {})
-].map(name => RegExp(`^${name}($|/)`))
+  ...Object.keys(pkg.peerDependencies || {}),
+].map((name) => RegExp(`^${name}($|/)`));
 
 const FILE_NAME = "actionHook";
 
 export default defineConfig([
   // CommonJS
   {
-    input: 'src/index.ts',
-    output: { file: `lib/${FILE_NAME}.js`, format: 'cjs', indent: false },
+    input: "src/index.ts",
+    output: { file: `lib/${FILE_NAME}.js`, format: "cjs", indent: false },
     external,
     plugins: [
       nodeResolve({
-        extensions
+        extensions,
       }),
       typescript({ useTsconfigDeclarationDir: true }),
       babel({
         extensions,
         plugins: [
-          ['@babel/plugin-transform-runtime', { version: babelRuntimeVersion }],
+          ["@babel/plugin-transform-runtime", { version: babelRuntimeVersion }],
           // ['./scripts/mangleErrors.js', { minify: false }]
         ],
-        babelHelpers: 'runtime'
-      })
-    ]
+        babelHelpers: "runtime",
+      }),
+    ],
   },
 
   // ES
   {
-    input: 'src/index.ts',
-    output: { file: `es/${FILE_NAME}.js`, format: 'es', indent: false },
+    input: "src/index.ts",
+    output: { file: `es/${FILE_NAME}.js`, format: "es", indent: false },
     external,
     plugins: [
       nodeResolve({
-        extensions
+        extensions,
       }),
       typescript({ tsconfigOverride: noDeclarationFiles }),
       babel({
         extensions,
         plugins: [
           [
-            '@babel/plugin-transform-runtime',
-            { version: babelRuntimeVersion, useESModules: true }
+            "@babel/plugin-transform-runtime",
+            { version: babelRuntimeVersion, useESModules: true },
           ],
           // ['./scripts/mangleErrors.js', { minify: false }]
         ],
-        babelHelpers: 'runtime'
-      })
-    ]
+        babelHelpers: "runtime",
+      }),
+    ],
   },
 
   // // ES for Browsers
   {
-    input: 'src/index.ts',
-    output: { file: `es/${FILE_NAME}.mjs`, format: 'es', indent: false },
+    input: "src/index.ts",
+    output: { file: `es/${FILE_NAME}.mjs`, format: "es", indent: false },
     external,
     plugins: [
       nodeResolve({
-        extensions
+        extensions,
       }),
       replace({
         preventAssignment: true,
-        'process.env.NODE_ENV': JSON.stringify('production')
+        "process.env.NODE_ENV": JSON.stringify("production"),
       }),
       typescript({ tsconfigOverride: noDeclarationFiles }),
       babel({
         extensions,
-        exclude: 'node_modules/**',
+        exclude: "node_modules/**",
         // plugins: [['./scripts/mangleErrors.js', { minify: true }]],
         skipPreflightCheck: true,
-        babelHelpers: 'bundled'
+        babelHelpers: "bundled",
       }),
       terser({
         compress: {
           pure_getters: true,
           unsafe: true,
-          unsafe_comps: true
-        }
-      })
-    ]
+          unsafe_comps: true,
+        },
+      }),
+    ],
   },
 
   // UMD Development
   {
-    input: 'src/index.ts',
+    input: "src/index.ts",
     output: {
       file: `dist/${FILE_NAME}.js`,
-      format: 'umd',
-      name: 'ActionHook',
-      indent: false
+      format: "umd",
+      name: "ActionHook",
+      indent: false,
     },
     external,
     plugins: [
       nodeResolve({
-        extensions
+        extensions,
       }),
       typescript({ tsconfigOverride: noDeclarationFiles }),
       babel({
         extensions,
-        exclude: 'node_modules/**',
+        exclude: "node_modules/**",
         // plugins: [['./scripts/mangleErrors.js', { minify: false }]],
-        babelHelpers: 'bundled'
+        babelHelpers: "bundled",
       }),
       replace({
         preventAssignment: true,
-        'process.env.NODE_ENV': JSON.stringify('development')
-      })
-    ]
+        "process.env.NODE_ENV": JSON.stringify("development"),
+      }),
+    ],
   },
 
   // UMD Production
   {
-    input: 'src/index.ts',
+    input: "src/index.ts",
     output: {
       file: `dist/${FILE_NAME}.min.js`,
-      format: 'umd',
-      name: 'ActionHook',
-      indent: false
+      format: "umd",
+      name: "ActionHook",
+      indent: false,
     },
     external,
     plugins: [
       nodeResolve({
-        extensions
+        extensions,
       }),
       typescript({ tsconfigOverride: noDeclarationFiles }),
       babel({
         extensions,
-        exclude: 'node_modules/**',
+        exclude: "node_modules/**",
         // plugins: [['./scripts/mangleErrors.js', { minify: true }]],
         skipPreflightCheck: true,
-        babelHelpers: 'bundled'
+        babelHelpers: "bundled",
       }),
       replace({
         preventAssignment: true,
-        'process.env.NODE_ENV': JSON.stringify('production')
+        "process.env.NODE_ENV": JSON.stringify("production"),
       }),
       terser({
         compress: {
           pure_getters: true,
           unsafe: true,
-          unsafe_comps: true
-        }
-      })
-    ]
-  }
+          unsafe_comps: true,
+        },
+      }),
+    ],
+  },
 ]);

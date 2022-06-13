@@ -1,14 +1,12 @@
 module.exports = {
-  "roots": [
-    "<rootDir>/src"
-  ],
-  "transform": {
+  roots: ["<rootDir>/src"],
+  transform: {
     "\\.[jt]sx?$": "babel-jest",
   },
-  "moduleNameMapper": {
+  moduleNameMapper: {
     "^@useActions(.*)$": "<rootDir>/src/useActions$1",
     "^@useLoading(.*)$": "<rootDir>/src/useLoading$1",
     "^@utils(.*)$": "<rootDir>/src/utils$1",
   },
-  "testEnvironment": "jsdom",
+  testEnvironment: "jsdom",
 };

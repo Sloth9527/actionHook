@@ -1,3 +1,4 @@
-import type { LoadingStateInterface } from './state';
+import type { LoadingStateInterface } from "./state";
 
-export const loadingSelector = (state: LoadingStateInterface) => state.loading > 0;
+export const loadingSelector = (state: LoadingStateInterface) =>
+  state.loading > 0;
