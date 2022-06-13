@@ -7,6 +7,7 @@
 .npmrc
 src
 node_modules
+coverage
 jest.config.js  
 pnpm-lock.yaml
 README.md

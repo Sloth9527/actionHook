@@ -20,7 +20,7 @@ const external = [
   ...Object.keys(pkg.peerDependencies || {}),
 ].map((name) => RegExp(`^${name}($|/)`));
 
-const FILE_NAME = "actionHook";
+const FILE_NAME = "ActionHook";
 
 export default defineConfig([
   // CommonJS
@@ -68,37 +68,6 @@ export default defineConfig([
     ],
   },
 
-  // // ES for Browsers
-  {
-    input: "src/index.ts",
-    output: { file: `es/${FILE_NAME}.mjs`, format: "es", indent: false },
-    external,
-    plugins: [
-      nodeResolve({
-        extensions,
-      }),
-      replace({
-        preventAssignment: true,
-        "process.env.NODE_ENV": JSON.stringify("production"),
-      }),
-      typescript({ tsconfigOverride: noDeclarationFiles }),
-      babel({
-        extensions,
-        exclude: "node_modules/**",
-        // plugins: [['./scripts/mangleErrors.js', { minify: true }]],
-        skipPreflightCheck: true,
-        babelHelpers: "bundled",
-      }),
-      terser({
-        compress: {
-          pure_getters: true,
-          unsafe: true,
-          unsafe_comps: true,
-        },
-      }),
-    ],
-  },
-
   // UMD Development
   {
     input: "src/index.ts",
@@ -123,42 +92,6 @@ export default defineConfig([
       replace({
         preventAssignment: true,
         "process.env.NODE_ENV": JSON.stringify("development"),
-      }),
-    ],
-  },
-
-  // UMD Production
-  {
-    input: "src/index.ts",
-    output: {
-      file: `dist/${FILE_NAME}.min.js`,
-      format: "umd",
-      name: "ActionHook",
-      indent: false,
-    },
-    external,
-    plugins: [
-      nodeResolve({
-        extensions,
-      }),
-      typescript({ tsconfigOverride: noDeclarationFiles }),
-      babel({
-        extensions,
-        exclude: "node_modules/**",
-        // plugins: [['./scripts/mangleErrors.js', { minify: true }]],
-        skipPreflightCheck: true,
-        babelHelpers: "bundled",
-      }),
-      replace({
-        preventAssignment: true,
-        "process.env.NODE_ENV": JSON.stringify("production"),
-      }),
-      terser({
-        compress: {
-          pure_getters: true,
-          unsafe: true,
-          unsafe_comps: true,
-        },
       }),
     ],
   },

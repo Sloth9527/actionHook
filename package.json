@@ -8,9 +8,9 @@
     "useReducer",
     "react hook"
   ],
-  "main": "lib/actionHook.js",
-  "unpkg": "dist/actionHook.js",
-  "module": "es/actionHook.js",
+  "main": "lib/ActionHook.js",
+  "unpkg": "dist/ActionHook.js",
+  "module": "es/ActionHook.js",
   "types": "types/index.d.ts",
   "files": [
     "dist",
@@ -29,7 +29,8 @@
     "lint": "eslint --ext js,ts src",
     "format": "npx prettier --write ./src",
     "format:check": "npx prettier --check ./src",
-    "build": "rollup -c",
+    "build": "pnpm clean && rollup -c",
+    "pub": "pnpm build && pnpm publish --registry registry.npmjs.org",
     "test": "jest",
     "test:cov": "jest --coverage",
     "precommit": "lint-staged"
