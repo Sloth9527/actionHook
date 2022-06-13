@@ -1,0 +1,17 @@
+{
+  "extends": [
+    "alloy",
+    "alloy/react",
+    "alloy/typescript",
+    "prettier"
+  ],
+  "plugins": ["jest"],
+  "env": {
+    "jest/globals": true
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
+}

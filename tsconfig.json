@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "ESNEXT",
+    "module": "ESNEXT",
+    "moduleResolution": "Node",
+    "lib": ["DOM", "ESNEXT"],
+    "declaration": true,
+    "declarationDir": "./types",
+    "esModuleInterop": true,
+    "strict": true,
+    "noImplicitAny": false,
+    "sourceMap": true,
+    "jsx": "react",
+    "baseUrl": "./src",
+    "paths": {
+      "@useActions": ["useActions/index.ts"],
+      "@useLoading": ["useLoading/index.ts"],
+      "@useLoading/*": ["useLoading/*"],
+      "@utils": ["utils/index.ts"],
+      "@utils/*": ["utils/*"],
+    },
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
+}
