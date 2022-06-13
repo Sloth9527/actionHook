@@ -20,7 +20,7 @@ export default function useLoadingActions<S, R extends ReducersInterface>(
   initialState?: S
 ): StateActions<S, R> {
   return useActions(
-    merge<LoadingReducersTypes, R>(loadingReducers, reducers as R),
-    merge<LoadingStateInterface, S>(initialLoadingState, initialState as S)
+    merge(loadingReducers, reducers as R),
+    merge(initialLoadingState, initialState as S)
   );
 }

@@ -1,7 +1,7 @@
 {
-  "name": "actionhook",
+  "name": "action-hook",
   "version": "1.0.0",
-  "description": "Use useReducer with TypeScript",
+  "description": "Use useReducer more efficiently.",
   "keywords": [
     "actionhook",
     "useActions",

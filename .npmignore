@@ -1,2 +1,14 @@
+.babelrc
+.git
+.husky
+.eslintrc
+.gitignore  
+.prettierrc.json  
+.npmrc
 src
+node_modules
+jest.config.js  
+pnpm-lock.yaml
+README.md
+rollup.config.js  
 tsconfig.json
