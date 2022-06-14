@@ -1,0 +1,40 @@
+name: Public NPM Package
+
+on:
+  create:
+    tags:
+      - v*
+
+jobs:
+  package-checker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2.2.2
+        with:
+          version: 6.0.2
+          run_install: |
+            - recursive: true
+              args: [--frozen-lockfile, --strict-peer-dependencies]
+      - name: Run Lint
+        run: pnpm lint
+      - name: Run Test
+        run: pnpm test
+
+  public-package:
+    needs: test-checker
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2.2.2
+        with:
+          version: 6.0.2
+          run_install: |
+            - recursive: true
+              args: [--frozen-lockfile, --strict-peer-dependencies]
+      - name: Set AUTH
+        run: touch ~/.npmrc && echo "registry=https://registry.npmjs.org/" >> ~/.npmrc && echo "//registry.npmjs.org/:always-auth=true" >> ~/.npmrc && echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
+      - name: Build Package
+        run: pnpm build
+      - name: Public Package
+        run: pnpm publish --registry registry.npmjs.org --no-git-checks
