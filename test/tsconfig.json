@@ -1,5 +1,4 @@
 {
-  "references": [{ "path": "../tsconfig.json" }],
   "compilerOptions": {
     "declaration": true,
     "baseUrl": "../src",

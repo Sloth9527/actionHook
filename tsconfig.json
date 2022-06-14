@@ -6,7 +6,6 @@
     "lib": ["DOM", "ESNEXT"],
     "declaration": true,
     "declarationDir": "./types",
-    "composite": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
