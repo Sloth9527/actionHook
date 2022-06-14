@@ -1,0 +1,14 @@
+{
+  "references": [{ "path": "../tsconfig.json" }],
+  "compilerOptions": {
+    "declaration": true,
+    "baseUrl": "../src",
+    "paths": {
+      "@useActions": ["useActions/index.ts"],
+      "@useLoading": ["useLoading/index.ts"],
+      "@useLoading/*": ["useLoading/*"],
+      "@utils/*": ["utils/*"]
+    }
+  },
+  "include": ["../src","./"]
+}

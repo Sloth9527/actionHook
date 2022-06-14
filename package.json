@@ -78,6 +78,7 @@
     "@babel/runtime": "^7.18.3"
   },
   "lint-staged": {
-    "src/**/*.{ts,js}": "npx prettier --write"
+    "src/**/*.{ts,js}": "npx prettier --write",
+    "test/**/*.{ts,js}": "npx prettier --write"
   }
 }
