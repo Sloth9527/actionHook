@@ -1,8 +1,6 @@
 import useActions from "./useActions";
-import useLoading, { loadingSelector } from "./useLoading";
+import useLoading from "./useLoading";
+export { loadingSelector } from "./useLoading";
+export type { ReducersInterface } from "./useActions";
 
-export default {
-  useActions,
-  useLoading,
-  loadingSelector,
-};
+export { useActions, useLoading };

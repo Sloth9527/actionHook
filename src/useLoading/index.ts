@@ -1,7 +1,7 @@
 import useActions, {
   ReducersInterface,
   StateAndActionsInterface,
-} from "@useActions";
+} from "../useActions";
 import { initialLoadingState, LoadingStateInterface } from "./state";
 import loadingReducers, { LoadingReducersTypes } from "./reducers";
 import { merge } from "@utils/obj";

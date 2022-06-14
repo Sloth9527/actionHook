@@ -3,8 +3,7 @@ import nodeResolve from "@rollup/plugin-node-resolve";
 import babel from "@rollup/plugin-babel";
 import replace from "@rollup/plugin-replace";
 import typescript from "rollup-plugin-typescript2";
-import { terser } from "rollup-plugin-terser";
-
+import dts from 'rollup-plugin-dts'
 import pkg from "./package.json";
 
 const extensions = [".ts"];
@@ -22,22 +21,35 @@ const external = [
 
 const FILE_NAME = "ActionHook";
 
+const globals = {
+  react: 'react',
+};
+
 export default defineConfig([
+  // index.d.ts
+  {
+    input: "src/index.ts",
+    output: { file: './types/index.d.ts', format: "es", globals },
+    external,
+    plugins: [
+      dts({ respectExternal: true }),
+    ],
+  },
+
   // CommonJS
   {
     input: "src/index.ts",
-    output: { file: `lib/${FILE_NAME}.js`, format: "cjs", indent: false },
+    output: { file: `lib/${FILE_NAME}.js`, format: "cjs", globals },
     external,
     plugins: [
       nodeResolve({
         extensions,
       }),
-      typescript({ useTsconfigDeclarationDir: true }),
+      typescript({ tsconfigOverride: noDeclarationFiles }),
       babel({
         extensions,
         plugins: [
           ["@babel/plugin-transform-runtime", { version: babelRuntimeVersion }],
-          // ['./scripts/mangleErrors.js', { minify: false }]
         ],
         babelHelpers: "runtime",
       }),
@@ -47,7 +59,7 @@ export default defineConfig([
   // ES
   {
     input: "src/index.ts",
-    output: { file: `es/${FILE_NAME}.js`, format: "es", indent: false },
+    output: { file: `es/${FILE_NAME}.js`, format: "es", globals },
     external,
     plugins: [
       nodeResolve({
@@ -61,7 +73,6 @@ export default defineConfig([
             "@babel/plugin-transform-runtime",
             { version: babelRuntimeVersion, useESModules: true },
           ],
-          // ['./scripts/mangleErrors.js', { minify: false }]
         ],
         babelHelpers: "runtime",
       }),
@@ -74,8 +85,8 @@ export default defineConfig([
     output: {
       file: `dist/${FILE_NAME}.js`,
       format: "umd",
-      name: "ActionHook",
-      indent: false,
+      name: "action-hook",
+      globals
     },
     external,
     plugins: [
@@ -86,7 +97,6 @@ export default defineConfig([
       babel({
         extensions,
         exclude: "node_modules/**",
-        // plugins: [['./scripts/mangleErrors.js', { minify: false }]],
         babelHelpers: "bundled",
       }),
       replace({
