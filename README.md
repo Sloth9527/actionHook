@@ -1,5 +1,9 @@
 # Action Hook Documentation
 
+![npm](https://img.shields.io/npm/v/action-hook)
+![npm bundle size](https://img.shields.io/bundlephobia/min/action-hook)
+![NPM](https://img.shields.io/npm/l/action-hook)
+
 Use useReducer more efficiently.
 
 ## Install
