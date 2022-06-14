@@ -22,7 +22,7 @@ jobs:
         run: pnpm test
 
   public-package:
-    needs: test-checker
+    needs: package-checker
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
