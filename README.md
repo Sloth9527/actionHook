@@ -17,6 +17,10 @@ $ npm install action-hook
 
 ### 1. useActions
 
+The hook accept reducers of type `{ reducerName: (state:T, payload:type) => newState }`, And return state and actions.
+
+Action is function that wraps dispatch like `(payload:type) => { dispatch( type: 'reducerName', payload ); }`;
+
 ```typescript
 import { useActions } from 'action-hook';
 
@@ -137,7 +141,7 @@ You can extend Action Hooks like [useLoading](https://github.com/Sloth9527/actio
         );
       }
   ```
-3. Create `selector.ts` file to handling reading complex state.
+3. Create `selector.ts` file to reading complex state.
   ```typescript
       // selector.ts
       import type { LoadingStateInterface } from "./state";
